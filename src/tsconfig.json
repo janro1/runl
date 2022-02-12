@@ -1,0 +1,40 @@
+{
+    "compilerOptions": {
+        "outDir": "../types",
+        "allowUnreachableCode": false,
+        "allowUnusedLabels": false,
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitOverride": true,
+        "noImplicitReturns": true,
+        "noUncheckedIndexedAccess": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "strict": true,
+        "module": "CommonJS",
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "rootDir": ".",
+        "declaration": true,
+        "emitDeclarationOnly": true,
+        "importsNotUsedAsValues": "error",
+        "sourceMap": false,
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "isolatedModules": true,
+        "lib": [
+            "es2019"
+        ],
+        "target": "es2019",
+        "types": [
+            "node"
+        ]
+    },
+    "references": [
+        {
+            "path": "../"
+        }
+    ],
+    "include": [
+        "*.ts"
+    ]
+}

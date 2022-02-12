@@ -1,0 +1,23 @@
+name: 'Setup npm & install packages'
+description:
+  'Contains all steps needed for installing and caching npm packages.'
+
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/cache@v2
+      with:
+        # npm cache files are stored in `~/.npm` on Linux/macOS
+        path: ~/.npm
+        key:
+          ${{ runner.os }}-pkg-${{ env.cache-name }}-${{
+          hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-pkg-${{ env.cache-name }}-
+          ${{ runner.os }}-pkg-
+          ${{ runner.os }}
+
+    - shell: bash
+      run: |
+        npm install -g npm@^8
+        npm ci --include=dev
