@@ -5,35 +5,34 @@
 ## How does it work?
 
 Instead of loading the lambda handler directly into the current node process,
-`runl` forks a child process for every request / call to execute. The child
-process requires the handler code, executes it and passes the result back to the
-calling process.
+`RunL` forks a child process in which the handler is executed. To execute the
+handler the child process requires the handler code, executes it and passes the
+result back to the parent process.
 
 Pros:
 
-- Better isolation. Globals, such as environment variables or globally patched
-  modules, like `https` (necessary for X-Ray support), are contained in the
-  child process.
-- Memory leaks are avoided as re-requiring the handler code in a single node
-  process is ruled out.
-- Native support for lambda timeout.
+- Better isolation. Globals, such as environment variables or patched modules,
+  like `https` (as required for AWS X-Ray support), are contained in the child
+  process.
+- Memory leaks are avoided.
 
 Cons:
 
-- Probably slower, as forking a new node process for every request and sending
-  the result back to the parent process adds overhead
+- Passing the handler function directly to RunL is not possible. Instead you
+  need to pass the local file path to the handler
 
-## Do not use it in production!
+## Modes
 
-`runl` was written to be used in a dev server only.
+RunL comes with two execution modes, `execute` and `run`. `execute` always forks
+a new child process, executes the handler within this process and passes the
+result to the parent process.
 
-## Do not try do bundle it
+This has the advantage that every request runs totally isolated from every other
+request. The disadvantage is, that the lambda handler code must always be newly
+required inside the child process. This can take a few seconds if the handler is
+several megabytes in size.
 
-`runl` can't be bundled. You can bundle the execute funtion into your dev
-server, but for a sucessful execution `runl` always needs the node module to be
-installed.
-
-## How to
+### How to use `execute`
 
 ```
 const { execute } = require('runl');
@@ -44,6 +43,34 @@ const result = await execute({
       BASE_URL: '/'
     }
 });
+```
+
+The `run` mode in contrast creates a long running fork for every handler /
+handler path passed to it. So if you have three lambda handler, RunL will
+maintain three forks in which the corresponding handlers are executed. The
+advantage is that the handler code must _not_ be newly required on every
+request, which can drastically reduce the request times in your dev server.
+
+### How to use `run`
+
+```
+    const { run } = require('runl');
+
+    const { execute, stop } = run();
+
+    const request1 = execute({
+      lambdaPath: __dirname + '/do-request-lambda.js'
+    });
+
+    const request2 = execute({
+      lambdaPath: __dirname + '/do-request-lambda.js'
+    });
+
+    const [result1, result2] = await Promise.all([request1, request2]);
+
+    // you can call stop() manually
+    // to make RunL kill all child processes immediatly
+    stop();
 ```
 
 ## Options

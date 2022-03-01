@@ -19,10 +19,12 @@ export const isOption = (value: unknown): value is Options => {
 };
 
 type LambdaResponse<T> = {
+  requestHash: string;
   result: T;
 };
 
 type LambdaError<T> = {
+  requestHash: string;
   error: T;
 };
 

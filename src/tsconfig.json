@@ -35,6 +35,6 @@
         }
     ],
     "include": [
-        "*.ts"
+        "index.ts",
     ]
 }

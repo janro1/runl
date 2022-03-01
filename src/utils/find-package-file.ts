@@ -1,6 +1,6 @@
 import * as path from 'path';
 import * as fs from 'fs';
-import * as pkgJson from '../package.json';
+import * as pkgJson from '../../package.json';
 
 declare const __webpack_require__: NodeRequire | undefined;
 declare const __non_webpack_require__: NodeRequire | undefined;

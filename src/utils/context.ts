@@ -1,6 +1,6 @@
 import * as crypto from 'crypto';
 import type { Context } from 'aws-lambda';
-import type { Options } from './types';
+import type { Options } from '../types';
 
 export class LambdaContext implements Context {
   private startTime = new Date().getTime();
