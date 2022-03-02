@@ -7,8 +7,8 @@ export declare class Channel<T> {
     private resolve;
     private reject;
     constructor(cp: ChildProcess, requestNumber: number);
-    send(data: Serializable): void;
-    waitForMessage(resolve: (value: T | PromiseLike<T>) => void, reject: (reason?: unknown) => void, timeout: number): void;
-    close(): void;
-    receive: (data: Serializable) => void;
+    send: (data: Serializable) => void;
+    waitForMessage: (resolve: (value: T | PromiseLike<T>) => void, reject: (reason?: unknown) => void, timeout: number) => void;
+    close: () => void;
+    private receive;
 }

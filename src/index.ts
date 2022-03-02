@@ -6,6 +6,8 @@ import { findPackageFile } from './utils/find-package-file';
 import { DeepPartial, LambdaMode, LambdaOptions } from './types';
 import { Channel } from './channel';
 
+export { LambdaMode };
+
 export class Lambda {
   private readonly options: LambdaOptions;
 
