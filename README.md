@@ -52,10 +52,10 @@ your dev server.
 ### How to use `Persistent` mode
 
 ```
-const { Lambda } = require('runl');
+import { Lambda, LambdaMode } from 'runl';
 
 const lambda = new Lambda({
-  mode: 'Persistent',
+  mode: LambdaMode.Persistent,
   lambdaPath: __dirname + '/handler/example-handler.js'
 });
 
