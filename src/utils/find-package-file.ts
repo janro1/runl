@@ -5,7 +5,7 @@ import * as pkgJson from '../../package.json';
 declare const __webpack_require__: NodeRequire | undefined;
 declare const __non_webpack_require__: NodeRequire | undefined;
 
-const getRequireFunction = () =>
+const getRequireFunction = (): NodeRequire | undefined =>
   typeof __webpack_require__ === 'function' ? __non_webpack_require__ : require;
 
 const findUp = (currentPath: string, fileName: string): string | undefined => {

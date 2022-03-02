@@ -1,6 +1,6 @@
 import * as crypto from 'crypto';
 import type { Context } from 'aws-lambda';
-import type { Options } from '../types';
+import type { LambdaOptions } from '../types';
 
 export class LambdaContext implements Context {
   private startTime = new Date().getTime();
@@ -23,7 +23,7 @@ export class LambdaContext implements Context {
 
   public logStreamName: string;
 
-  constructor(options: Options) {
+  constructor(options: LambdaOptions) {
     this.lambdaTimeout = options.lambdaTimeout || this.lambdaTimeout;
     this.functionName = options.lambdaHandler || 'runl';
     this.memoryLimitInMB = '3000';
@@ -35,25 +35,25 @@ export class LambdaContext implements Context {
     this.callbackWaitsForEmptyEventLoop = false;
   }
 
-  public getRemainingTimeInMillis(): number {
+  public getRemainingTimeInMillis = (): number => {
     const now = new Date().getTime();
     return this.lambdaTimeout - (now - this.startTime);
-  }
+  };
 
-  public done(): void {
+  public done = (): void => {
     throw new Error('Method not implemented.');
-  }
+  };
 
-  public fail(): void {
+  public fail = (): void => {
     throw new Error('Method not implemented.');
-  }
+  };
 
-  public succeed(): void {
+  public succeed = (): void => {
     throw new Error('Method not implemented.');
-  }
+  };
 
-  private createInvokedFunctionArn(): string {
-    return [
+  private createInvokedFunctionArn = (): string =>
+    [
       'arn',
       'aws',
       'lambda',
@@ -63,9 +63,8 @@ export class LambdaContext implements Context {
       this.functionName,
       this.functionVersion
     ].join(':');
-  }
 
-  private createAWSRequestId(): string {
+  private createAWSRequestId = (): string => {
     const hash = crypto
       .createHash('sha256')
       .update(crypto.randomBytes(20).toString())
@@ -78,5 +77,5 @@ export class LambdaContext implements Context {
       hash.slice(16, 20),
       hash.slice(20, 32)
     ].join('-');
-  }
+  };
 }

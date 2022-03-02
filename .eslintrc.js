@@ -58,13 +58,15 @@ const eslintOptions = {
     '@typescript-eslint/no-implied-eval': 0,
     '@typescript-eslint/no-throw-literal': 0,
 
+    '@typescript-eslint/explicit-function-return-type': 2,
+
     'import/order': 'error',
     'prefer-arrow/prefer-arrow-functions': [
       'error',
       {
         disallowPrototype: true,
         singleReturnOnly: false,
-        classPropertiesAllowed: false
+        classPropertiesAllowed: true
       }
     ]
   }

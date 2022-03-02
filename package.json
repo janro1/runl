@@ -11,7 +11,7 @@
     "build:common": "node build.js",
     "build:types": "rm -rf types && tsc --build src",
     "compile": "tsc -p src/tsconfig.json --noEmit --emitDeclarationOnly false",
-    "lint": "eslint . --ext .js,.ts --cache",
+    "lint": "eslint . --ext .ts --cache",
     "lint:fix": "npm run lint -- --fix",
     "test": "jest"
   },

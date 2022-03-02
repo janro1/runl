@@ -1,7 +1,7 @@
 import type { Handler } from 'aws-lambda';
-import { Options } from '../types';
+import { LambdaOptions } from '../types';
 
-export const getLambdaHandler = (options: Options) => {
+export const getLambdaHandler = (options: LambdaOptions): Handler => {
   const lambdaHandler = options.lambdaHandler || 'handler';
 
   try {

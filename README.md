@@ -12,70 +12,64 @@ result back to the parent process.
 Pros:
 
 - Better isolation. Globals, such as environment variables or patched modules,
-  like `https` (as required for AWS X-Ray support), are contained in the child
-  process.
-- Memory leaks are avoided.
+  are contained in the child process.
+- No Memory leaks.
 
 Cons:
 
-- Passing the handler function directly to RunL is not possible. Instead you
-  need to pass the local file path to the handler
+- Passing the handler function to RunL is not possible. If you want to do this,
+  better just import / require the handlers direcly into your dev-server.
 
 ## Modes
 
-RunL comes with two execution modes, `execute` and `run`. `execute` always forks
-a new child process, executes the handler within this process and passes the
-result to the parent process.
+RunL comes with two execution modes, `Ephemeral` and `Persistent`. `Ephemeral`
+always forks a new child process, executes the handler within this process and
+passes the result to the parent process.
 
 This has the advantage that every request runs totally isolated from every other
 request. The disadvantage is, that the lambda handler code must always be newly
 required inside the child process. This can take a few seconds if the handler is
 several megabytes in size.
 
-### How to use `execute`
+### How to use `Ephemeral` mode
 
 ```
-const { execute } = require('runl');
+const { Lambda } = require('runl');
 
-const result = await execute({
-    lambdaPath: './lambda.js',
-    environment: {
-      BASE_URL: '/'
-    }
+const lambda = new Lambda({
+  mode: 'Ephemeral',
+  lambdaPath: __dirname + '/handler/example-handler.js'
 });
+
+lambda.execute({ path: '/index.html' });
 ```
 
-The `run` mode in contrast creates a long running fork for every handler /
-handler path passed to it. So if you have three lambda handler, RunL will
-maintain three forks in which the corresponding handlers are executed. The
-advantage is that the handler code must _not_ be newly required on every
-request, which can drastically reduce the request times in your dev server.
+The `Persistent` mode in contrast creates a long running fork that is reused for
+every invocation. The advantage is that the handler code must _not_ be newly
+required for every request, which can drastically reduce the request times in
+your dev server.
 
-### How to use `run`
+### How to use `Persistent` mode
 
 ```
-    const { run } = require('runl');
+const { Lambda } = require('runl');
 
-    const { execute, stop } = run();
+const lambda = new Lambda({
+  mode: 'Persistent',
+  lambdaPath: __dirname + '/handler/example-handler.js'
+});
 
-    const request1 = execute({
-      lambdaPath: __dirname + '/do-request-lambda.js'
-    });
+lambda.execute();
 
-    const request2 = execute({
-      lambdaPath: __dirname + '/do-request-lambda.js'
-    });
-
-    const [result1, result2] = await Promise.all([request1, request2]);
-
-    // you can call stop() manually
-    // to make RunL kill all child processes immediatly
-    stop();
+// you can manually stop the child process
+// otherwise the child process lives
+// until the parent process is terminated
+lambda.stop();
 ```
 
 ## Options
 
-`execute` accepts the following options:
+The `Lambda` constructor accepts the following options:
 
 required:
 
@@ -83,12 +77,15 @@ required:
 
 optional:
 
-- **event**: an
-  [APIGatewayProxyEvent](https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html#api-gateway-simple-proxy-for-lambda-input-format)
-  passed to the lambda handler.
 - **environment**: environment variables accessible in the lambda handler.
 
 - **lambdaHandler**: the name of lambda handler, defaults to **handler**.
 
 - **lambdaTimeout**: maximum execution time for the lambda, defaults to
   30.000ms.
+
+The `execute` method accepts only en event parameter:
+
+- **event**: an
+  [APIGatewayProxyEvent](https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html#api-gateway-simple-proxy-for-lambda-input-format)
+  passed to the lambda handler.

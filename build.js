@@ -1,10 +1,6 @@
 require('esbuild')
   .build({
-    entryPoints: [
-      './src/index.ts',
-      './src/execute/execute-lambda.ts',
-      './src/run/run-lambda.ts'
-    ],
+    entryPoints: ['./src/index.ts', './src/run-lambda.ts'],
     bundle: true,
     outdir: './dist',
     platform: 'node'
