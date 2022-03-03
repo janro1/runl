@@ -25,9 +25,13 @@ export class Lambda {
   }
 
   public init = (): void => {
-    if (this.cp || this.options.mode === LambdaMode.Ephemeral) {
+    if (this.options.mode === LambdaMode.Ephemeral) {
       console.warn('init() called with no effect. Lambda mode is ephemeral.');
 
+      return;
+    }
+
+    if (this.cp) {
       return;
     }
 
@@ -122,13 +126,6 @@ export class Lambda {
     if (!this.options.autoReload) {
       return true;
     }
-
-    console.log(
-      'NEW FORK!!!!',
-      lastModified(this.options.lambdaPath),
-      this.lastUpdated,
-      lastModified(this.options.lambdaPath) === this.lastUpdated
-    );
 
     return lastModified(this.options.lambdaPath) === this.lastUpdated;
   };
