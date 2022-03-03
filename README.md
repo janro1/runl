@@ -91,8 +91,8 @@ optional:
 - **autoReload**: if true, the lambda handler is automatically updated every
   time the file associated with lambdaPath is changed. Defaults to **false**.
 
-The `execute` method accepts only en event parameter:
+The `execute` method:
 
-- **event**: an
+- **event**: The
   [APIGatewayProxyEvent](https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html#api-gateway-simple-proxy-for-lambda-input-format)
-  passed to the lambda handler.
+  that is passed to the lambda handler.
