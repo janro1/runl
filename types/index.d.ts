@@ -4,6 +4,7 @@ export { LambdaMode };
 export declare class Lambda {
     private readonly options;
     private cp;
+    private lastUpdated;
     private lambdaWrapperPath;
     private requestCount;
     constructor(options: LambdaOptions);
@@ -14,4 +15,5 @@ export declare class Lambda {
     private getOrCreateFork;
     private newRequestNumber;
     private getLambdaWrapperPath;
+    private isForkUpToDate;
 }

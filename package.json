@@ -1,6 +1,6 @@
 {
   "name": "runl",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "Run AWS Lambda functions locally",
   "license": "MIT",
   "author": "Janno Rothfos <code@jannorothfos.com>",

@@ -3,6 +3,7 @@
 import { ChildProcess, fork } from 'child_process';
 import type { APIGatewayProxyEvent } from 'aws-lambda';
 import { findPackageFile } from './utils/find-package-file';
+import { lastModified } from './utils/last-modified';
 import { DeepPartial, LambdaMode, LambdaOptions } from './types';
 import { Channel } from './channel';
 
@@ -12,6 +13,8 @@ export class Lambda {
   private readonly options: LambdaOptions;
 
   private cp: ChildProcess | undefined;
+
+  private lastUpdated: number | undefined;
 
   private lambdaWrapperPath: string | undefined;
 
@@ -79,11 +82,18 @@ export class Lambda {
       }
     });
 
+    this.lastUpdated = lastModified(this.options.lambdaPath);
+
     return cp;
   };
 
   private getOrCreateFork = (): ChildProcess => {
     if (!this.cp) {
+      this.cp = this.createFork();
+    }
+
+    if (!this.isForkUpToDate()) {
+      this.cp.kill();
       this.cp = this.createFork();
     }
 
@@ -106,5 +116,20 @@ export class Lambda {
     this.lambdaWrapperPath = lambdaWrapperPath;
 
     return lambdaWrapperPath;
+  };
+
+  private isForkUpToDate = (): boolean => {
+    if (!this.options.autoReload) {
+      return true;
+    }
+
+    console.log(
+      'NEW FORK!!!!',
+      lastModified(this.options.lambdaPath),
+      this.lastUpdated,
+      lastModified(this.options.lambdaPath) === this.lastUpdated
+    );
+
+    return lastModified(this.options.lambdaPath) === this.lastUpdated;
   };
 }

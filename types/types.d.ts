@@ -10,6 +10,7 @@ export declare const enum LambdaMode {
 export declare type LambdaOptions = {
     readonly mode: LambdaMode;
     readonly lambdaPath: string;
+    readonly autoReload?: boolean;
     readonly environment?: {
         readonly [key: string]: string;
     };

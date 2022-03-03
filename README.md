@@ -84,6 +84,9 @@ optional:
 - **lambdaTimeout**: maximum execution time for the lambda, defaults to
   30.000ms.
 
+- **autoReload**: if true, the lambda handler is automatically updated every
+  time the file associated with **lambdaPath** is changed. Defaults to false.
+
 The `execute` method accepts only en event parameter:
 
 - **event**: an
