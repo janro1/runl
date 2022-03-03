@@ -38,7 +38,10 @@ const { Lambda } = require('runl');
 
 const lambda = new Lambda({
   mode: 'Ephemeral',
-  lambdaPath: __dirname + '/handler/example-handler.js'
+  lambdaPath: __dirname + '/handler/example-handler.js',
+  environment: {
+    BASE_URL: '/'
+  }
 });
 
 lambda.execute({ path: '/index.html' });
@@ -52,6 +55,7 @@ your dev server.
 ### How to use `Persistent` mode
 
 ```
+import { APIGatewayProxyResult } from 'aws-lambda';
 import { Lambda, LambdaMode } from 'runl';
 
 const lambda = new Lambda({
@@ -59,7 +63,7 @@ const lambda = new Lambda({
   lambdaPath: __dirname + '/handler/example-handler.js'
 });
 
-lambda.execute();
+const result = lambda.execute<APIGatewayProxyResult>();
 
 // you can manually stop the child process
 // otherwise the child process lives
@@ -82,10 +86,10 @@ optional:
 - **lambdaHandler**: the name of lambda handler, defaults to **handler**.
 
 - **lambdaTimeout**: maximum execution time for the lambda, defaults to
-  30.000ms.
+  **30.000ms**.
 
 - **autoReload**: if true, the lambda handler is automatically updated every
-  time the file associated with **lambdaPath** is changed. Defaults to false.
+  time the file associated with lambdaPath is changed. Defaults to **false**.
 
 The `execute` method accepts only en event parameter:
 
