@@ -1,3 +1,6 @@
+/* eslint-disable no-console */
+
+import type { Callback } from 'aws-lambda';
 import { LambdaContext } from './utils/context';
 import { getLambdaHandler } from './utils/get-lambda-handler';
 import {
@@ -26,9 +29,18 @@ export const runLambda = async (): Promise<void> => {
 
     const handler = getLambdaHandler(options);
     const context = new LambdaContext(options);
-    const callback = (result: unknown): void => {
-      process.send &&
-        process.send({ result, requestHash: options.requestNumber });
+    const callback: Callback = (error, result): void => {
+      if (!process.send) {
+        console.error('process.send is undefined');
+
+        return;
+      }
+
+      if (error) {
+        process.send({ error, requestNumber: options.requestNumber });
+      } else {
+        process.send({ result, requestNumber: options.requestNumber });
+      }
     };
 
     try {

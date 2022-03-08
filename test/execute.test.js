@@ -29,6 +29,17 @@ describe('runl', () => {
     expect(result2).toBe(200);
   });
 
+  it('works with non-async handlers', async () => {
+    lambda = new Lambda({
+      mode: 'Ephemeral',
+      lambdaPath: __dirname + '/handler/callback.js',
+    });
+
+    const result = await lambda.execute();
+
+    expect(result).toBe(403);
+  });
+
   it('uses the lambdHandler option correctly', async () => {
     lambda = new Lambda({
       mode: 'Ephemeral',
