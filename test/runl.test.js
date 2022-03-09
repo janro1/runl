@@ -1,8 +1,9 @@
 const fs = require('fs');
+const path = require('path');
 const { Lambda } = require('../dist/index');
 
 const touchFile = (filePath) => {
-  const newDate = new Date().getTime();
+  const newDate = new Date();
   fs.utimesSync(filePath, newDate, newDate);
 };
 
@@ -94,6 +95,29 @@ describe('runl', () => {
     expect(result2).toBe(2);
 
     touchFile(lambdaPath);
+
+    const result3 = await lambda.execute();
+
+    expect(result3).toBe(1);
+  });
+
+
+  it('accepts the index.js folder', async () => {
+    const lambdaPath = __dirname + '/handler';
+
+    lambda = new Lambda({
+      mode: 'Persistent',
+      autoReload: true,
+      lambdaPath
+    });
+
+    const result1 = await lambda.execute();
+    const result2 = await lambda.execute();
+
+    expect(result1).toBe(1);
+    expect(result2).toBe(2);
+
+    touchFile(path.join(lambdaPath, 'index.js'));
 
     const result3 = await lambda.execute();
 

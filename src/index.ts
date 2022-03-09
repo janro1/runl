@@ -21,7 +21,10 @@ export class Lambda {
   private requestCount = 0;
 
   constructor(options: LambdaOptions) {
-    this.options = options;
+    this.options = {
+      ...options,
+      lambdaPath: require.resolve(options.lambdaPath)
+    };
   }
 
   public init = (): void => {
