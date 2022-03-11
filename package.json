@@ -18,6 +18,10 @@
   "author": "Janno Rothfos <code@jannorothfos.com>",
   "main": "dist/index.js",
   "typings": "types",
+  "files": [
+    "dist",
+    "types"
+  ],
   "scripts": {
     "build": "rm -rf dist && npm run build:common && npm run build:types",
     "build:common": "node build.js",
