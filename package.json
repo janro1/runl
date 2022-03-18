@@ -1,6 +1,6 @@
 {
   "name": "runl",
-  "version": "0.3.6",
+  "version": "0.4.0",
   "description": "Run AWS Lambda functions locally",
   "keywords": [
     "aws",
@@ -29,7 +29,7 @@
     "compile": "tsc -p src/tsconfig.json --noEmit --emitDeclarationOnly false",
     "lint": "eslint . --ext .ts --cache",
     "lint:fix": "npm run lint -- --fix",
-    "test": "jest"
+    "test": "jest --no-cache"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.92",

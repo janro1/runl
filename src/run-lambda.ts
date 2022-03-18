@@ -37,27 +37,41 @@ export const runLambda = async (): Promise<void> => {
       }
 
       if (error) {
-        process.send({ error, requestNumber: options.requestNumber });
+        process.send({
+          error: {
+            message: typeof error === 'string' ? error : error.message,
+            stack: typeof error === 'string' ? '' : error.stack
+          },
+          requestNumber: options.requestNumber
+        });
       } else {
         process.send({ result, requestNumber: options.requestNumber });
       }
     };
 
-    try {
-      const result = handler(options.event, context, callback);
+    const resultPromise = handler(options.event, context, callback);
 
-      if (result && result.then) {
-        result.then((result) => {
-          process.send &&
-            process.send({
-              result,
-              requestNumber: options.requestNumber
-            });
-        });
-      }
-    } catch (error) {
-      process.send &&
-        process.send({ error, requestNumber: options.requestNumber });
+    if (!resultPromise || !resultPromise.then) {
+      return;
+    }
+
+    if (!process.send) {
+      console.error('process.send is undefined');
+
+      return;
+    }
+
+    try {
+      const result = await resultPromise;
+      process.send({
+        result,
+        requestNumber: options.requestNumber
+      });
+    } catch (e) {
+      process.send({
+        error: { message: e.message, stack: e.stack },
+        requestNumber: options.requestNumber
+      });
     }
   });
 

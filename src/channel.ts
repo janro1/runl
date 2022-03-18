@@ -49,9 +49,15 @@ export class Channel<T> {
       return;
     }
 
-    if (isLambdaError<T>(data)) {
+    if (isLambdaError(data)) {
       if (this.timeout) clearTimeout(this.timeout);
-      if (this.reject) this.reject(data.error);
+      if (this.reject) {
+        const { message, stack } = data.error;
+        const error = new Error(message);
+        error.stack = stack;
+
+        this.reject(error);
+      }
     }
 
     if (isLambdaResponse<T>(data)) {

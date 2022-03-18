@@ -30,10 +30,30 @@ describe('runl', () => {
     expect(result2).toBe(200);
   });
 
+  it('handles exceptions properly', async () => {
+    lambda = new Lambda({
+      mode: 'Ephemeral',
+      lambdaPath: __dirname + '/handler/fail.js'
+    });
+
+    await expect(async () => {
+      await lambda.execute();
+    }).rejects.toThrowError('errare humanum est');
+
+    lambda = new Lambda({
+      mode: 'Ephemeral',
+      lambdaPath: __dirname + '/handler/fail-callback.js'
+    });
+
+    await expect(async () => {
+      await lambda.execute();
+    }).rejects.toThrowError('errare humanum est');
+  });
+
   it('works with non-async handlers', async () => {
     lambda = new Lambda({
       mode: 'Ephemeral',
-      lambdaPath: __dirname + '/handler/callback.js',
+      lambdaPath: __dirname + '/handler/callback.js'
     });
 
     const result = await lambda.execute();
@@ -100,7 +120,6 @@ describe('runl', () => {
 
     expect(result3).toBe(1);
   });
-
 
   it('accepts the index.js folder', async () => {
     const lambdaPath = __dirname + '/handler';

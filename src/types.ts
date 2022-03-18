@@ -29,11 +29,15 @@ export type LambdaResponse<T> = WithRequestNumber & {
   readonly result: T;
 };
 
-export type LambdaError<T> = WithRequestNumber & {
-  readonly error: T;
+export type ErrorContainer = WithRequestNumber & {
+  readonly error: Serializable;
 };
 
-export type LambdaResult<T> = LambdaResponse<T> | LambdaError<T>;
+export type LambdaError = WithRequestNumber & {
+  readonly error: Error;
+};
+
+export type LambdaResult<T> = LambdaResponse<T> | LambdaError;
 
 const hasProperty = <T extends Serializable>(
   value: Serializable,
@@ -60,6 +64,11 @@ export const isLambdaResponse = <T>(
   value: Serializable
 ): value is LambdaResponse<T> => hasProperty(value, 'result');
 
-export const isLambdaError = <T>(
-  value: Serializable
-): value is LambdaError<T> => hasProperty(value, 'error');
+const isErrorContainer = (value: Serializable): value is ErrorContainer =>
+  hasProperty(value, 'error');
+
+const isError = (value: Serializable): value is Error =>
+  hasProperty(value, 'message') && hasProperty(value, 'stack');
+
+export const isLambdaError = (value: Serializable): value is LambdaError =>
+  isErrorContainer(value) && isError(value.error);
