@@ -1,5 +1,6 @@
 import type { ChildProcess, Serializable } from 'child_process';
 import { isLambdaError, isLambdaResponse, isWithRequestNumber } from './types';
+import { deserializeError } from './utils/error';
 
 export class Channel<T> {
   private readonly cp: ChildProcess;
@@ -51,13 +52,7 @@ export class Channel<T> {
 
     if (isLambdaError(data)) {
       if (this.timeout) clearTimeout(this.timeout);
-      if (this.reject) {
-        const { message, stack } = data.error;
-        const error = new Error(message);
-        error.stack = stack;
-
-        this.reject(error);
-      }
+      if (this.reject) this.reject(deserializeError(data.error));
     }
 
     if (isLambdaResponse<T>(data)) {

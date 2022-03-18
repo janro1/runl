@@ -30,8 +30,12 @@ export declare type LambdaResponse<T> = WithRequestNumber & {
 export declare type ErrorContainer = WithRequestNumber & {
     readonly error: Serializable;
 };
+export declare type SerializableError = {
+    message: string;
+    stack: string | undefined;
+};
 export declare type LambdaError = WithRequestNumber & {
-    readonly error: Error;
+    readonly error: SerializableError;
 };
 export declare type LambdaResult<T> = LambdaResponse<T> | LambdaError;
 export declare const isOption: (value: Serializable) => value is LambdaOptions;

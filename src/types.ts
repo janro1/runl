@@ -33,8 +33,13 @@ export type ErrorContainer = WithRequestNumber & {
   readonly error: Serializable;
 };
 
+export type SerializableError = {
+  message: string;
+  stack: string | undefined;
+};
+
 export type LambdaError = WithRequestNumber & {
-  readonly error: Error;
+  readonly error: SerializableError;
 };
 
 export type LambdaResult<T> = LambdaResponse<T> | LambdaError;

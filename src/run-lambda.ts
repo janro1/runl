@@ -11,6 +11,7 @@ import {
   WithEvent,
   WithRequestNumber
 } from './types';
+import { serializeError } from './utils/error';
 
 const isValidOption = (
   options: LambdaOptions & WithRequestNumber & WithEvent
@@ -24,7 +25,9 @@ export const runLambda = async (): Promise<void> => {
       WithEvent;
 
     if (!isValidOption(options)) {
-      throw new Error('Unable to execute lambda function, no options given.');
+      throw new Error(
+        'Unable to execute lambda handler, invalid options given.'
+      );
     }
 
     const handler = getLambdaHandler(options);
@@ -36,17 +39,11 @@ export const runLambda = async (): Promise<void> => {
         return;
       }
 
-      if (error) {
-        process.send({
-          error: {
-            message: typeof error === 'string' ? error : error.message,
-            stack: typeof error === 'string' ? '' : error.stack
-          },
-          requestNumber: options.requestNumber
-        });
-      } else {
-        process.send({ result, requestNumber: options.requestNumber });
-      }
+      process.send({
+        result: result ?? undefined,
+        error: error ? serializeError(error) : undefined,
+        requestNumber: options.requestNumber
+      });
     };
 
     const resultPromise = handler(options.event, context, callback);
@@ -67,9 +64,9 @@ export const runLambda = async (): Promise<void> => {
         result,
         requestNumber: options.requestNumber
       });
-    } catch (e) {
+    } catch (error) {
       process.send({
-        error: { message: e.message, stack: e.stack },
+        error: serializeError(error),
         requestNumber: options.requestNumber
       });
     }
