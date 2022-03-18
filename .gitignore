@@ -2,4 +2,6 @@ dist
 typings
 node_modules
 
+*.tgz
+
 .eslintcache
