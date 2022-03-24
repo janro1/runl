@@ -13,25 +13,27 @@ import {
 } from './types';
 import { serializeError } from './utils/error';
 
-const isValidOption = (
-  options: LambdaOptions & WithRequestNumber & WithEvent
-): boolean =>
+type RawHandlerOptions = LambdaOptions & WithRequestNumber & WithEvent;
+
+const isValidOption = (options: RawHandlerOptions): boolean =>
   isOption(options) && isWithRequestNumber(options) && isWithEvent(options);
+
+const getOptions = (rawOptions: string): RawHandlerOptions => {
+  const options = JSON.parse(rawOptions);
+
+  if (!isValidOption(options)) {
+    throw new Error('Unable to execute lambda handler, invalid options given.');
+  }
+
+  return options;
+};
 
 export const runLambda = async (): Promise<void> => {
   process.on('message', async (rawOptions: string) => {
-    const options = JSON.parse(rawOptions) as LambdaOptions &
-      WithRequestNumber &
-      WithEvent;
-
-    if (!isValidOption(options)) {
-      throw new Error(
-        'Unable to execute lambda handler, invalid options given.'
-      );
-    }
-
+    const options = getOptions(rawOptions);
     const handler = getLambdaHandler(options);
     const context = new LambdaContext(options);
+
     const callback: Callback = (error, result): void => {
       if (!process.send) {
         console.error('process.send is undefined');
