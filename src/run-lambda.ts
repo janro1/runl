@@ -31,36 +31,37 @@ const getOptions = (rawOptions: string): RawHandlerOptions => {
 export const runLambda = async (): Promise<void> => {
   process.on('message', async (rawOptions: string) => {
     const options = getOptions(rawOptions);
-    const handler = getLambdaHandler(options);
-    const context = new LambdaContext(options);
 
-    const callback: Callback = (error, result): void => {
+    try {
+      const handler = getLambdaHandler(options);
+      const context = new LambdaContext(options);
+
+      const callback: Callback = (error, result): void => {
+        if (!process.send) {
+          console.error('process.send is undefined');
+
+          return;
+        }
+
+        process.send({
+          result: result ?? undefined,
+          error: error ? serializeError(error) : undefined,
+          requestNumber: options.requestNumber
+        });
+      };
+
+      const resultPromise = handler(options.event, context, callback);
+
+      if (!resultPromise || !resultPromise.then) {
+        return;
+      }
+
       if (!process.send) {
         console.error('process.send is undefined');
 
         return;
       }
 
-      process.send({
-        result: result ?? undefined,
-        error: error ? serializeError(error) : undefined,
-        requestNumber: options.requestNumber
-      });
-    };
-
-    const resultPromise = handler(options.event, context, callback);
-
-    if (!resultPromise || !resultPromise.then) {
-      return;
-    }
-
-    if (!process.send) {
-      console.error('process.send is undefined');
-
-      return;
-    }
-
-    try {
       const result = await resultPromise;
       process.send({
         result,

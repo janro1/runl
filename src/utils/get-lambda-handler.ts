@@ -1,6 +1,15 @@
 import type { Handler } from 'aws-lambda';
 import { LambdaOptions } from '../types';
 
+class LambdaHandlerError extends Error {
+  constructor(message: string, error: Error) {
+    super(message);
+    this.name = this.constructor.name;
+
+    this.stack = this.stack + '\n' + error.stack;
+  }
+}
+
 export const getLambdaHandler = (options: LambdaOptions): Handler => {
   const lambdaHandler = options.lambdaHandler || 'handler';
 
@@ -13,6 +22,9 @@ export const getLambdaHandler = (options: LambdaOptions): Handler => {
 
     return lambdaFunction[lambdaHandler] as Handler;
   } catch (e) {
-    throw new Error(`Unable to load lambda handler from ${options.lambdaPath}`);
+    throw new LambdaHandlerError(
+      `Unable to require lambda handler from ${options.lambdaPath}`,
+      e
+    );
   }
 };

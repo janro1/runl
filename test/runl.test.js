@@ -50,6 +50,17 @@ describe('runl', () => {
     }).rejects.toThrowError('errare humanum est');
   });
 
+  it('does not swallow errors while requiring the handler code', async () => {
+    lambda = new Lambda({
+      mode: 'Ephemeral',
+      lambdaPath: __dirname + '/handler/broken.js'
+    });
+
+    await expect(async () => {
+      await lambda.execute();
+    }).rejects.toThrow('Unable to require lambda handler');
+  });
+
   it('works with non-async handlers', async () => {
     lambda = new Lambda({
       mode: 'Ephemeral',
