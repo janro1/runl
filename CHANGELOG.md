@@ -1,4 +1,16 @@
-## 0.5.0 (2022-03-18)
+### [0.5.1](https://github.com/janro1/runl/compare/v0.5.0...v0.5.1) (2022-03-30)
+
+
+### Bug Fixes
+
+* do not swallow errors when require the handler code ([7e1c3a2](https://github.com/janro1/runl/commit/7e1c3a2cedad1d39526a15db65d237a4322adbb3))
+
+
+### Misc
+
+* minor code clean up ([047a40c](https://github.com/janro1/runl/commit/047a40c5984f028c2076a16560deb86ea2e09910))
+
+## [0.5.0](https://github.com/janro1/runl/compare/dec5b0d3f33a4f4f0c5fb9e24290f38c8e61b5a7...v0.5.0) (2022-03-18)
 
 
 ### Features
