@@ -3,7 +3,7 @@ import type { APIGatewayProxyEvent } from 'aws-lambda';
 
 export type DeepPartial<T> = { [k in keyof T]?: DeepPartial<T[k]> };
 
-export const enum LambdaMode {
+export enum LambdaMode {
   Ephemeral = 'Ephemeral',
   Persistent = 'Persistent'
 }
