@@ -1,3 +1,10 @@
+### [0.5.2](https://github.com/janro1/runl/compare/v0.5.1...v0.5.2) (2022-04-08)
+
+
+### Bug Fixes
+
+* do not export const enum ([3d0c4c6](https://github.com/janro1/runl/commit/3d0c4c6e97cc3e6fc59b558edcc0c697051e182a))
+
 ### [0.5.1](https://github.com/janro1/runl/compare/v0.5.0...v0.5.1) (2022-03-30)
 
 
