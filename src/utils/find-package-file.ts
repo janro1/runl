@@ -34,6 +34,10 @@ export const findPackageFile = (fileName: string): string | undefined => {
 
     return path.join(path.dirname(filePath), fileName);
   } catch {
+    if (fs.existsSync(path.join(__dirname, fileName))) {
+      return path.join(__dirname, fileName);
+    }
+
     const pkgPath = findUp(process.cwd(), 'package.json');
     if (pkgPath) {
       const pkg = requireFunc(path.join(pkgPath, 'package.json'));
