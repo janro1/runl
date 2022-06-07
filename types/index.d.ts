@@ -9,7 +9,7 @@ export declare class Lambda {
     private requestCount;
     constructor(options: LambdaOptions);
     init: () => void;
-    execute: <T>(event?: DeepPartial<APIGatewayProxyEvent> | undefined) => Promise<T>;
+    execute: <T>(event?: DeepPartial<APIGatewayProxyEvent>) => Promise<T>;
     stop: () => void;
     private createFork;
     private getOrCreateFork;

@@ -17,6 +17,7 @@ export declare type LambdaOptions = {
     };
     readonly lambdaTimeout?: number;
     readonly lambdaHandler?: string;
+    readonly debugPort?: number;
 };
 export declare type WithRequestNumber = {
     readonly requestNumber: number;

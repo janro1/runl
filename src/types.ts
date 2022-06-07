@@ -15,6 +15,7 @@ export type LambdaOptions = {
   readonly environment?: { readonly [key: string]: string };
   readonly lambdaTimeout?: number;
   readonly lambdaHandler?: string;
+  readonly debugPort?: number;
 };
 
 export type WithRequestNumber = {

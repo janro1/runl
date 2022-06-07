@@ -4,6 +4,7 @@ import { ChildProcess, fork } from 'child_process';
 import type { APIGatewayProxyEvent } from 'aws-lambda';
 import { findPackageFile } from './utils/find-package-file';
 import { lastModified } from './utils/last-modified';
+import { createExecArgv } from './utils/create-exec-argv';
 import { DeepPartial, LambdaMode, LambdaOptions } from './types';
 import { Channel } from './channel';
 
@@ -84,6 +85,7 @@ export class Lambda {
     const lambdaWrapperPath = this.getLambdaWrapperPath();
 
     const cp = fork(lambdaWrapperPath, {
+      execArgv: createExecArgv(this.options),
       env: {
         ...(this.options.environment ?? {})
       }
