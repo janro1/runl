@@ -3,6 +3,7 @@ require('esbuild')
     entryPoints: ['./src/index.ts', './src/run-lambda.ts'],
     bundle: true,
     outdir: './dist',
-    platform: 'node'
+    platform: 'node',
+    tsconfig: './src/tsconfig.json'
   })
   .catch(() => process.exit(1));
