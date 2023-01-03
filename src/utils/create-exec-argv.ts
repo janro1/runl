@@ -1,13 +1,29 @@
 import type { LambdaOptions } from '../types';
 
-const isDebugArg = (arg: string): boolean =>
+const isInspectArg = (arg: string): boolean =>
   arg.startsWith('inspect') || arg.startsWith('--inspect');
 
-const isDebugEnabled = (): boolean => process.execArgv.some(isDebugArg);
+const isInspectSetViaEnv = (): boolean => {
+  const nodeEnv = process.env['NODE_OPTIONS'] || process.env['NODE'];
 
-export const createExecArgv = (options: LambdaOptions): string[] =>
-  isDebugEnabled() && options.debugPort
-    ? process.execArgv.map((arg) =>
-        isDebugArg(arg) ? `--inspect=${options.debugPort}` : arg
-      )
-    : process.execArgv;
+  return nodeEnv ? nodeEnv.split('--').some(isInspectArg) : false;
+};
+
+const isInspectSetViaArg = (): boolean => process.execArgv.some(isInspectArg);
+
+export const createExecArgv = (options: LambdaOptions): string[] => {
+  if (options.debugPort) {
+    if (isInspectSetViaArg()) {
+      return process.execArgv.map((arg) =>
+        isInspectArg(arg) ? `--inspect=${options.debugPort}` : arg
+      );
+    }
+
+    if (isInspectSetViaEnv()) {
+      process.execArgv.push(`--inspect=${options.debugPort}`);
+      return process.execArgv;
+    }
+  }
+
+  return process.execArgv;
+};

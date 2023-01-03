@@ -91,9 +91,9 @@ optional:
 - **autoReload**: if true, the lambda handler is automatically updated every
   time the file associated with lambdaPath is changed. Defaults to **false**.
 
-- **debugPort**: when node is started with the debug flag `(--inspect)` and a
-  **debugPort** is specified, the forked process will listen on this port for
-  debug messages.
+- **debugPort**: when node is started with the debug flag
+  `(--inspect or NODE_OPTIONS="--inspect")` and a **debugPort** is specified,
+  the forked process will listen on this port for debug messages.
 
 The `execute` method:
 
