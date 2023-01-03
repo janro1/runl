@@ -1,3 +1,10 @@
+## [0.7.0](https://github.com/janro1/runl/compare/v0.6.0...v0.7.0) (2023-01-03)
+
+
+### Features
+
+* improved debug support ([07910d1](https://github.com/janro1/runl/commit/07910d1ce4d189c4371115d9ecee77779de12424))
+
 ## [0.6.0](https://github.com/janro1/runl/compare/v0.5.2...v0.6.0) (2022-06-07)
 
 
