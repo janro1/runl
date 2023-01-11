@@ -1,6 +1,5 @@
 {
     "compilerOptions": {
-        "outDir": "../types",
         "allowUnreachableCode": false,
         "allowUnusedLabels": false,
         "noFallthroughCasesInSwitch": true,
@@ -10,9 +9,7 @@
         "noUnusedLocals": true,
         "noUnusedParameters": true,
         "strict": true,
-        "module": "CommonJS",
-        "moduleResolution": "node",
-        "resolveJsonModule": true,
+        "resolveJsonModule": false,
         "rootDir": ".",
         "declaration": true,
         "emitDeclarationOnly": true,
@@ -22,9 +19,9 @@
         "forceConsistentCasingInFileNames": true,
         "isolatedModules": true,
         "lib": [
-            "es2019"
+            "es2020"
         ],
-        "target": "es2019",
+        "target": "es2020",
         "types": [
             "node"
         ]
@@ -33,8 +30,5 @@
         {
             "path": "../"
         }
-    ],
-    "include": [
-        "index.ts",
     ]
 }

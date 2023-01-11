@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+        "outDir": "../types/esm",
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
+    },
+    "include": [
+        "index.mjs.ts",
+        "run-lambda.mjs.ts"
+    ]
+}

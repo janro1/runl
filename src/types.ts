@@ -74,7 +74,7 @@ const isErrorContainer = (value: Serializable): value is ErrorContainer =>
   hasProperty(value, 'error');
 
 const isError = (value: Serializable): value is Error =>
-  hasProperty(value, 'message') && hasProperty(value, 'stack');
+  hasProperty(value, 'message');
 
 export const isLambdaError = (value: Serializable): value is LambdaError =>
   isErrorContainer(value) && isError(value.error);

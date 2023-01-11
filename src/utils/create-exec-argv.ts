@@ -1,4 +1,4 @@
-import type { LambdaOptions } from '../types';
+import type { LambdaOptions } from '../types.js';
 
 const isInspectArg = (arg: string): boolean =>
   arg.startsWith('inspect') || arg.startsWith('--inspect');

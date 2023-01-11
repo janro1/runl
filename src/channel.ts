@@ -1,6 +1,10 @@
 import type { ChildProcess, Serializable } from 'child_process';
-import { isLambdaError, isLambdaResponse, isWithRequestNumber } from './types';
-import { deserializeError } from './utils/error';
+import {
+  isLambdaError,
+  isLambdaResponse,
+  isWithRequestNumber
+} from './types.js';
+import { deserializeError } from './utils/error.js';
 
 export class Channel<T> {
   private readonly cp: ChildProcess;

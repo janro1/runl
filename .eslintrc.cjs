@@ -5,23 +5,16 @@ const eslintOptions = {
   root: true,
   parserOptions: {
     tsconfigRootDir: __dirname,
-    project: ['./tsconfig.eslint.json']
-  },
-  settings: {
-    'import/resolver': {
-      node: {
-        extensions: ['.js', '.ts', 'd.ts']
-      }
-    }
+    project: ['./tsconfig.eslint.json'],
+    ecmaVersion: 2020
   },
   extends: [
     'prettier',
     'plugin:prettier/recommended',
-    'plugin:import/recommended',
     'plugin:@typescript-eslint/recommended',
     'eslint:recommended'
   ],
-  plugins: ['@typescript-eslint', 'prefer-arrow', 'import'],
+  plugins: ['@typescript-eslint', 'prefer-arrow'],
   rules: {
     'arrow-body-style': ['error', 'as-needed'],
     'arrow-parens': 'off',
@@ -60,7 +53,6 @@ const eslintOptions = {
 
     '@typescript-eslint/explicit-function-return-type': 2,
 
-    'import/order': 'error',
     'prefer-arrow/prefer-arrow-functions': [
       'error',
       {
