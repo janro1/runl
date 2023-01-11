@@ -1,8 +1,7 @@
 /* eslint-disable no-console */
 
-import type { Callback } from 'aws-lambda';
-import { LambdaContext } from './utils/context';
-import { getLambdaHandler } from './utils/get-lambda-handler';
+import type { Callback, Handler } from 'aws-lambda';
+import { LambdaContext } from './utils/context.js';
 import {
   isOption,
   isWithEvent,
@@ -10,10 +9,12 @@ import {
   LambdaOptions,
   WithEvent,
   WithRequestNumber
-} from './types';
-import { serializeError } from './utils/error';
+} from './types.js';
+import { serializeError } from './utils/error.js';
 
 type RawHandlerOptions = LambdaOptions & WithRequestNumber & WithEvent;
+
+type LambdaHandlerLoader = (options: LambdaOptions) => Promise<Handler>;
 
 const isValidOption = (options: RawHandlerOptions): boolean =>
   isOption(options) && isWithRequestNumber(options) && isWithEvent(options);
@@ -28,12 +29,15 @@ const getOptions = (rawOptions: string): RawHandlerOptions => {
   return options;
 };
 
-export const runLambda = async (): Promise<void> => {
+const isSerializeableError = (value: unknown): value is Error | string =>
+  value !== null && (typeof value === 'string' || value instanceof Error);
+
+export const runLambda = async (loader: LambdaHandlerLoader): Promise<void> => {
   process.on('message', async (rawOptions: string) => {
     const options = getOptions(rawOptions);
 
     try {
-      const handler = getLambdaHandler(options);
+      const handler = await loader(options);
       const context = new LambdaContext(options);
 
       const callback: Callback = (error, result): void => {
@@ -67,15 +71,17 @@ export const runLambda = async (): Promise<void> => {
         result,
         requestNumber: options.requestNumber
       });
-    } catch (error) {
-      process.send({
-        error: serializeError(error),
-        requestNumber: options.requestNumber
-      });
+    } catch (e) {
+      if (process.send && isSerializeableError(e)) {
+        process.send({
+          error: serializeError(e),
+          requestNumber: options.requestNumber
+        });
+      } else {
+        console.error('Unable to execute Lambda', e);
+      }
     }
   });
 
   process.stdin.resume();
 };
-
-runLambda();

@@ -5,6 +5,8 @@
   },
   "include": [
     "src/**/*.ts",
+    "*.cjs",
+    "*.mjs",
     "package.json"
   ]
 }

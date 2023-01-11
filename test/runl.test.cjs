@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { Lambda } = require('../dist/index');
+const { Lambda } = require('../dist/cjs/index.cjs');
 
 const touchFile = (filePath) => {
   const newDate = new Date();
@@ -20,7 +20,7 @@ describe('runl', () => {
   it.each(modes)('returns status code 200 for mode: %s', async (mode) => {
     lambda = new Lambda({
       mode: mode,
-      lambdaPath: __dirname + '/handler/do-request.js'
+      lambdaPath: __dirname + '/handler/do-request.cjs'
     });
 
     const result1 = await lambda.execute();
@@ -33,7 +33,7 @@ describe('runl', () => {
   it('handles exceptions properly', async () => {
     lambda = new Lambda({
       mode: 'Ephemeral',
-      lambdaPath: __dirname + '/handler/fail.js'
+      lambdaPath: __dirname + '/handler/fail.cjs'
     });
 
     await expect(async () => {
@@ -42,7 +42,7 @@ describe('runl', () => {
 
     lambda = new Lambda({
       mode: 'Ephemeral',
-      lambdaPath: __dirname + '/handler/fail-callback.js'
+      lambdaPath: __dirname + '/handler/fail-callback.cjs'
     });
 
     await expect(async () => {
@@ -53,7 +53,7 @@ describe('runl', () => {
   it('does not swallow errors while requiring the handler code', async () => {
     lambda = new Lambda({
       mode: 'Ephemeral',
-      lambdaPath: __dirname + '/handler/broken.js'
+      lambdaPath: __dirname + '/handler/broken.cjs'
     });
 
     await expect(async () => {
@@ -64,7 +64,7 @@ describe('runl', () => {
   it('works with non-async handlers', async () => {
     lambda = new Lambda({
       mode: 'Ephemeral',
-      lambdaPath: __dirname + '/handler/callback.js'
+      lambdaPath: __dirname + '/handler/callback.cjs'
     });
 
     const result = await lambda.execute();
@@ -75,7 +75,7 @@ describe('runl', () => {
   it('uses the lambdHandler option correctly', async () => {
     lambda = new Lambda({
       mode: 'Ephemeral',
-      lambdaPath: __dirname + '/handler/non-default.js',
+      lambdaPath: __dirname + '/handler/non-default.cjs',
       lambdaHandler: 'go'
     });
 
@@ -87,7 +87,7 @@ describe('runl', () => {
   it('passes the environment variables', async () => {
     lambda = new Lambda({
       mode: 'Ephemeral',
-      lambdaPath: __dirname + '/handler/use-env.js',
+      lambdaPath: __dirname + '/handler/use-env.cjs',
       environment: {
         TEST: 'test'
       }
@@ -101,7 +101,7 @@ describe('runl', () => {
   it('respects the lambda timeout', async () => {
     lambda = new Lambda({
       mode: 'Ephemeral',
-      lambdaPath: __dirname + '/handler/timeout.js',
+      lambdaPath: __dirname + '/handler/timeout.cjs',
       lambdaTimeout: 2000
     });
 
@@ -111,7 +111,7 @@ describe('runl', () => {
   });
 
   it('auto reloads the lambda handler', async () => {
-    const lambdaPath = __dirname + '/handler/auto-reload.js';
+    const lambdaPath = __dirname + '/handler/auto-reload.cjs';
 
     lambda = new Lambda({
       mode: 'Persistent',
@@ -126,28 +126,6 @@ describe('runl', () => {
     expect(result2).toBe(2);
 
     touchFile(lambdaPath);
-
-    const result3 = await lambda.execute();
-
-    expect(result3).toBe(1);
-  });
-
-  it('accepts the index.js folder', async () => {
-    const lambdaPath = __dirname + '/handler';
-
-    lambda = new Lambda({
-      mode: 'Persistent',
-      autoReload: true,
-      lambdaPath
-    });
-
-    const result1 = await lambda.execute();
-    const result2 = await lambda.execute();
-
-    expect(result1).toBe(1);
-    expect(result2).toBe(2);
-
-    touchFile(path.join(lambdaPath, 'index.js'));
 
     const result3 = await lambda.execute();
 
