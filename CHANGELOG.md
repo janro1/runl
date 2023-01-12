@@ -1,5 +1,6 @@
-##  (2023-01-12)
+## 0.1.0 (2023-01-12)
 
+* chore: release [skip ci] ([84ed794](https://github.com/janro1/runl/commit/84ed794))
 * build: add minimal node version ([ceba156](https://github.com/janro1/runl/commit/ceba156))
 * build: fix release action ([fae670f](https://github.com/janro1/runl/commit/fae670f))
 * build: update dev dependencies ([2f0f01f](https://github.com/janro1/runl/commit/2f0f01f))
