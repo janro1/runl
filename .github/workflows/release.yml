@@ -18,6 +18,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
+          registry-url: 'https://registry.npmjs.org'
 
       - name: Install packages
         uses: ./.github/actions/setup-npm
@@ -38,7 +39,7 @@ jobs:
           git-message: 'chore: release'
           git-user-name: 'janro1'
           git-user-email: 'code@jannorothfos.com'
-          config-file-path: './changelog.config.js'
+          config-file-path: './changelog.config.cjs'
 
       - name: Publish
         env:
