@@ -1,3 +1,10 @@
+## [0.8.1](https://github.com/janro1/runl/compare/v0.8.0...v0.8.1) (2023-01-12)
+
+
+### Bug Fixes
+
+* esm types ([5696307](https://github.com/janro1/runl/commit/5696307ec8115bf32bece95c94d1e65b80a0416c))
+
 ## [0.8.0](https://github.com/janro1/runl/compare/v0.7.0...v0.8.0) (2023-01-12)
 
 
@@ -43,16 +50,4 @@
 ### Bug Fixes
 
 * do not export const enum ([3d0c4c6](https://github.com/janro1/runl/commit/3d0c4c6e97cc3e6fc59b558edcc0c697051e182a))
-
-## [0.5.1](https://github.com/janro1/runl/compare/v0.5.0...v0.5.1) (2022-03-30)
-
-
-### Bug Fixes
-
-* do not swallow errors when require the handler code ([7e1c3a2](https://github.com/janro1/runl/commit/7e1c3a2cedad1d39526a15db65d237a4322adbb3))
-
-
-### Misc
-
-* minor code clean up ([047a40c](https://github.com/janro1/runl/commit/047a40c5984f028c2076a16560deb86ea2e09910))
 
