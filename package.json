@@ -1,6 +1,6 @@
 {
   "name": "runl",
-  "version": "0.7.0",
+  "version": null,
   "description": "Run AWS Lambda functions locally",
   "keywords": [
     "aws",
