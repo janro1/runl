@@ -2,6 +2,12 @@
 
 **Run** AWS **L**ambda functions locally in node.
 
+The main focus of this project is to enable you to use your functions locally, either in a dev-server or for testing, without any adjustments needed.
+
+With a variety of alternatives available, why choose this library?
+
+It's lightweight and comes with zero runtime dependencies. Moreover, it runs your lambda functions as isolated as possible, executing each lambda in a separate child process.
+
 ## How does it work?
 
 Instead of loading the lambda handler directly into the current node process,
@@ -9,16 +15,10 @@ Instead of loading the lambda handler directly into the current node process,
 handler the child process requires the handler code, executes it and passes the
 result back to the parent process.
 
-Pros:
+Why so complicated?  
+Other libraries, which repeatedly re-import lambda code in the same node process, encounter an issue where residual memory from each import is not fully cleared by the garbage collector. This results in memory leaks. Consequently, when running numerous tests locally or doing a lot of requests, these memory leaks can cause the development server to eventually cease functioning.
 
-- Better isolation. Globals, such as environment variables or patched modules,
-  are contained in the child process.
-- No Memory leaks.
-
-Cons:
-
-- Passing the handler function to RunL is not possible. If you want to do this,
-  better just import / require the handlers direcly into your dev-server.
+Unfortunately, this scenario is not merely theoretical; in fact, it was the primary motivation behind the creation of this library.
 
 ## Modes
 
