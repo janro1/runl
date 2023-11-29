@@ -4,7 +4,7 @@ import { ChildProcess, fork } from 'child_process';
 import type { APIGatewayProxyEvent } from 'aws-lambda';
 import { lastModified } from './utils/last-modified.js';
 import { createExecArgv } from './utils/create-exec-argv.js';
-import { DeepPartial, LambdaMode, LambdaOptions } from './types.js';
+import { type DeepPartial, LambdaMode, type LambdaOptions } from './types.js';
 import { Channel } from './channel.js';
 
 export { LambdaMode };

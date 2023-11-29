@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as url from 'url';
 import { createRequire } from 'module';
-import { LambdaMode, LambdaOptions } from './types.js';
+import { type LambdaOptions, LambdaMode } from './types.js';
 import { findUp } from './utils/find-up.js';
 import { LambdaBase } from './lambda-base.js';
 

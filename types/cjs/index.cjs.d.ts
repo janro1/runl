@@ -1,5 +1,5 @@
 /// <reference types="node" resolution-mode="require"/>
-import { LambdaMode, LambdaOptions } from './types.js';
+import { type LambdaOptions, LambdaMode } from './types.js';
 import { LambdaBase } from './lambda-base.js';
 export { LambdaMode };
 export declare class Lambda extends LambdaBase {

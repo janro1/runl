@@ -1,5 +1,5 @@
 import type { APIGatewayProxyEvent } from 'aws-lambda';
-import { DeepPartial, LambdaMode, LambdaOptions } from './types.js';
+import { type DeepPartial, LambdaMode, type LambdaOptions } from './types.js';
 export { LambdaMode };
 export declare abstract class LambdaBase {
     private cp;

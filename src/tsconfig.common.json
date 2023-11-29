@@ -13,7 +13,7 @@
         "rootDir": ".",
         "declaration": true,
         "emitDeclarationOnly": true,
-        "importsNotUsedAsValues": "error",
+        "verbatimModuleSyntax": true,
         "sourceMap": false,
         "esModuleInterop": true,
         "forceConsistentCasingInFileNames": true,

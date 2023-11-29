@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import { LambdaMode, LambdaOptions } from './types.js';
+import { type LambdaOptions, LambdaMode } from './types.js';
 import { findUp } from './utils/find-up.js';
 import { LambdaBase } from './lambda-base.js';
 

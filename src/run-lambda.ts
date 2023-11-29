@@ -3,12 +3,12 @@
 import type { Callback, Handler } from 'aws-lambda';
 import { LambdaContext } from './utils/context.js';
 import {
+  type LambdaOptions,
+  type WithEvent,
+  type WithRequestNumber,
   isOption,
   isWithEvent,
-  isWithRequestNumber,
-  LambdaOptions,
-  WithEvent,
-  WithRequestNumber
+  isWithRequestNumber
 } from './types.js';
 import { serializeError } from './utils/error.js';
 
