@@ -1,3 +1,10 @@
+## [0.8.2](https://github.com/janro1/runl/compare/v0.8.1...v0.8.2) (2023-11-29)
+
+
+### Misc
+
+* update dev dependencies ([3b5f608](https://github.com/janro1/runl/commit/3b5f6089905ad737950d917fc8a0c5cc7cf84e08))
+
 ## [0.8.1](https://github.com/janro1/runl/compare/v0.8.0...v0.8.1) (2023-01-12)
 
 
@@ -43,11 +50,4 @@
 ### Misc
 
 * update ts ([5f8e674](https://github.com/janro1/runl/commit/5f8e6740c6e85739411e8f349c0a27fdfa7b3195))
-
-## [0.5.2](https://github.com/janro1/runl/compare/v0.5.1...v0.5.2) (2022-04-08)
-
-
-### Bug Fixes
-
-* do not export const enum ([3d0c4c6](https://github.com/janro1/runl/commit/3d0c4c6e97cc3e6fc59b558edcc0c697051e182a))
 
