@@ -98,6 +98,17 @@ describe('runl', () => {
     expect(result).toBe('test');
   });
 
+  it('passes the event parameter', async () => {
+    lambda = new Lambda({
+      mode: 'Ephemeral',
+      lambdaPath: __dirname + '/handler/use-event.cjs'
+    });
+
+    const result = await lambda.execute({ action: 'open' });
+
+    expect(result).toBe('open');
+  });
+
   it('respects the lambda timeout', async () => {
     lambda = new Lambda({
       mode: 'Ephemeral',

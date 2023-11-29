@@ -100,3 +100,37 @@ The `execute` method:
 - **event**: The
   [APIGatewayProxyEvent](https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html#api-gateway-simple-proxy-for-lambda-input-format)
   that is passed to the lambda handler.
+
+
+## CLI
+You can also use the CLI to run a lambda function from a file.
+
+| CLI Options | |
+| --- | ------------- |
+| -t, --timeout | Maximal execution time in ms |
+| -e, --env  | Environment variables, either a JSON object or file path |
+| -o, --event  | The event object passed to the lambda function, either a JSON object or file path   |
+| -h, --handler  | The name of lambda handler, defaults to: handler    |
+
+#### Examples:
+```
+# passing environment variables 
+runl -e '{"LOG_LEVEL": "DEBUG"}' ./index.cjs
+
+# specify event data and milliseconds until lambda timeout
+runl -o '{"action": "delete"}' -t 1000 ./index.cjs
+```
+
+
+
+
+   
+      
+   
+        
+   
+       
+   
+      
+
+
