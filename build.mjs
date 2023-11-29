@@ -39,6 +39,12 @@ es.build({
 }).catch(() => process.exit(1));
 
 es.build({
+  ...cjsOptions,
+  entryPoints: ['./src/cli.cjs.ts'],
+  outfile: './dist/cjs/cli.cjs'
+}).catch(() => process.exit(1));
+
+es.build({
   ...esmOptions,
   entryPoints: ['./src/index.mjs.ts'],
   outfile: './dist/esm/index.mjs'
@@ -48,4 +54,10 @@ es.build({
   ...esmOptions,
   entryPoints: ['./src/run-lambda.mjs.ts'],
   outfile: './dist/esm/run-lambda.mjs'
+}).catch(() => process.exit(1));
+
+es.build({
+  ...esmOptions,
+  entryPoints: ['./src/cli.mjs.ts'],
+  outfile: './dist/esm/cli.mjs'
 }).catch(() => process.exit(1));
