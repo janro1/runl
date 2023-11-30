@@ -1,3 +1,15 @@
+## [1.1.0](https://github.com/janro1/runl/compare/v0.8.2...v1.1.0) (2023-11-30)
+
+
+### Features
+
+* add cli ([89be472](https://github.com/janro1/runl/commit/89be4729a4fc544685faa853f69923336275f473))
+
+
+### Misc
+
+* update github actions ([8665614](https://github.com/janro1/runl/commit/8665614954f654c0cab10f4c205ba73cc800a375))
+
 ## [0.8.2](https://github.com/janro1/runl/compare/v0.8.1...v0.8.2) (2023-11-29)
 
 
@@ -33,21 +45,4 @@
 ### Features
 
 * improved debug support ([07910d1](https://github.com/janro1/runl/commit/07910d1ce4d189c4371115d9ecee77779de12424))
-
-## [0.6.0](https://github.com/janro1/runl/compare/v0.5.2...v0.6.0) (2022-06-07)
-
-
-### Features
-
-* add debug support ([24609d5](https://github.com/janro1/runl/commit/24609d560c737ff7eeb5ce1056a431f9654f4d38))
-
-
-### Bug Fixes
-
-* make runl work again when linked locally ([27ff25b](https://github.com/janro1/runl/commit/27ff25b38a0ca7f398fd01da6acc358afaf1d81a))
-
-
-### Misc
-
-* update ts ([5f8e674](https://github.com/janro1/runl/commit/5f8e6740c6e85739411e8f349c0a27fdfa7b3195))
 
