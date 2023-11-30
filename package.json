@@ -4,8 +4,10 @@
   "description": "Run AWS Lambda functions locally",
   "keywords": [
     "aws",
+    "amazon",
     "dev-server",
-    "lambda"
+    "lambda",
+    "local"
   ],
   "bugs": {
     "url": "https://github.com/janro1/runl/issues"
