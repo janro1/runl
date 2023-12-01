@@ -1,3 +1,10 @@
+## [1.2.0](https://github.com/janro1/runl/compare/v1.1.0...v1.2.0) (2023-12-01)
+
+
+### Features
+
+* allow the lambda to return a non-promise result ([dcfc22d](https://github.com/janro1/runl/commit/dcfc22d9816032f33e7409949353495a7e8880a0))
+
 ## [1.1.0](https://github.com/janro1/runl/compare/v0.8.2...v1.1.0) (2023-11-30)
 
 
@@ -38,11 +45,4 @@
 * fix release action ([8378a81](https://github.com/janro1/runl/commit/8378a81bf9b8e4d3d6337eff9134e9ba083baf06))
 * update dev dependencies ([2f0f01f](https://github.com/janro1/runl/commit/2f0f01fc734789a290aff6bd0344d108ea72e724))
 * update node version in pipelines ([ea54cc1](https://github.com/janro1/runl/commit/ea54cc1d9e3598ba7d25821cb7de2eba82e9f177))
-
-## [0.7.0](https://github.com/janro1/runl/compare/v0.6.0...v0.7.0) (2023-01-03)
-
-
-### Features
-
-* improved debug support ([07910d1](https://github.com/janro1/runl/commit/07910d1ce4d189c4371115d9ecee77779de12424))
 
