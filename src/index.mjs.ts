@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as url from 'url';
-import { createRequire } from 'module';
+import { createRequire as _createRequire } from 'module';
 import { type LambdaOptions, LambdaMode } from './types.js';
 import { findUp } from './utils/find-up.js';
 import { LambdaBase } from './lambda-base.js';
@@ -28,7 +28,7 @@ export class Lambda extends LambdaBase {
 
   protected findLambdaWrapperPath = (): string | undefined => {
     try {
-      const requireFunc = createRequire(import.meta.url);
+      const requireFunc = _createRequire(import.meta.url);
 
       // require will resolve the cjs path
       const cjsPath = path.dirname(requireFunc.resolve('runl'));
