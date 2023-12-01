@@ -2,7 +2,7 @@
 const config = {
   verbose: true,
   modulePathIgnorePatterns: ['<rootDir>/dist'],
-  testMatch: [ "**/?(*.)+(test).cjs" ]
+  testMatch: ['**/?(*.)+(test).cjs']
 };
 
 export default config;

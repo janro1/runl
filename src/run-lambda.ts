@@ -54,9 +54,9 @@ export const runLambda = async (loader: LambdaHandlerLoader): Promise<void> => {
         });
       };
 
-      const resultPromise = handler(options.event, context, callback);
+      const lambdaResult = handler(options.event, context, callback);
 
-      if (!resultPromise || !resultPromise.then) {
+      if (!lambdaResult) {
         return;
       }
 
@@ -66,7 +66,8 @@ export const runLambda = async (loader: LambdaHandlerLoader): Promise<void> => {
         return;
       }
 
-      const result = await resultPromise;
+      const result =
+        lambdaResult.then !== undefined ? await lambdaResult : lambdaResult;
       process.send({
         result,
         requestNumber: options.requestNumber

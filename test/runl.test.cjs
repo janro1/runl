@@ -142,4 +142,17 @@ describe('runl', () => {
 
     expect(result3).toBe(1);
   });
+
+  it('works with a non-promise result', async () => {
+    const lambdaPath = __dirname + '/handler/sync-handler.cjs';
+
+    lambda = new Lambda({
+      mode: 'Persistent',
+      lambdaPath
+    });
+
+    const result1 = await lambda.execute();
+
+    expect(result1).toBe('Hello World!');
+  });
 });
