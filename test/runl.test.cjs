@@ -1,5 +1,4 @@
 const fs = require('fs');
-const path = require('path');
 const { Lambda } = require('../dist/cjs/index.cjs');
 
 const touchFile = (filePath) => {
