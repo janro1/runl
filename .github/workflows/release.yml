@@ -4,14 +4,18 @@ on: workflow_dispatch
 jobs:
   create-release:
     runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+      contents: write
+
     env:
       CI: true
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
-          token: ${{ secrets.REPO_TOKEN }}
           ref: 'master'
 
       - name: Setup node
@@ -33,9 +37,9 @@ jobs:
 
       - name: Create Changelog
         id: changelog
-        uses: TriPSs/conventional-changelog-action@v3
+        uses: TriPSs/conventional-changelog-action@v6
         with:
-          github-token: ${{ secrets.REPO_TOKEN }}
+          github-token: ${{ secrets.github_token }}
           git-message: 'chore: release'
           git-user-name: 'janro1'
           git-user-email: 'code@jannorothfos.com'
@@ -44,12 +48,12 @@ jobs:
       - name: Publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-        run: npm publish --access public
+        run: npm publish --provenance --access public
 
       - name: Create Release
         uses: actions/create-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.REPO_TOKEN  }}
+          GITHUB_TOKEN: ${{ secrets.github_token }}
         with:
           tag_name: ${{ steps.changelog.outputs.tag }}
           release_name: ${{ steps.changelog.outputs.tag }}
