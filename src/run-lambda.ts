@@ -56,12 +56,21 @@ export const runLambda = async (loader: LambdaHandlerLoader): Promise<void> => {
 
       const lambdaResult = handler(options.event, context, callback);
 
-      if (!lambdaResult) {
+      if (!process.send) {
+        console.error('process.send is undefined');
+
         return;
       }
 
-      if (!process.send) {
-        console.error('process.send is undefined');
+      if (!lambdaResult) {
+        if (handler.length >= 3) {
+          return;
+        }
+
+        process.send({
+          result: null,
+          requestNumber: options.requestNumber
+        });
 
         return;
       }

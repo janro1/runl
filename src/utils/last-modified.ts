@@ -6,7 +6,7 @@ export const lastModified = (filePath: string): number => {
   try {
     const stats = fs.statSync(filePath);
     return stats.mtime.getTime();
-  } catch (e) {
+  } catch {
     console.warn(`Unable to get last modified date for file ${filePath}`);
 
     return new Date(-8640000000000000).getTime();

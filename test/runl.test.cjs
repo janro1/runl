@@ -154,4 +154,15 @@ describe('runl', () => {
 
     expect(result1).toBe('Hello World!');
   });
+
+  it('works with void handlers', async () => {
+    const lambdaPath = __dirname + '/handler/void-handler.cjs';
+
+    lambda = new Lambda({
+      mode: 'Ephemeral',
+      lambdaPath
+    });
+
+    await lambda.execute();
+  });
 });

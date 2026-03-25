@@ -1,4 +1,3 @@
-/// <reference types="node" resolution-mode="require"/>
 import type { ChildProcess, Serializable } from 'child_process';
 export declare class Channel<T> {
     private readonly cp;

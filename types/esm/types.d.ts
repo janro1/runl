@@ -1,4 +1,3 @@
-/// <reference types="node" resolution-mode="require"/>
 import type { Serializable } from 'child_process';
 import type { APIGatewayProxyEvent } from 'aws-lambda';
 export type DeepPartial<T> = {
