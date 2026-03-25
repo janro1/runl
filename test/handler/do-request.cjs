@@ -1,9 +1,9 @@
-const https = require('https');
+const http = require('http');
 
 exports.handler = async () =>
   new Promise((resolve, reject) => {
-    https
-      .get('https://example.com', (res) => {
+    http
+      .get('http://example.net', (res) => {
         resolve(res.statusCode);
       })
       .on('error', (e) => {
