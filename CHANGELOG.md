@@ -1,3 +1,15 @@
+## [1.3.0](https://github.com/janro1/runl/compare/v1.2.0...v1.3.0) (2026-03-25)
+
+
+### Features
+
+* support void handlers ([4eed505](https://github.com/janro1/runl/commit/4eed505680827b92fbecd66e346f81b2d9ee07db))
+
+
+### Misc
+
+* use actions/checkout@v6 ([f6f86f5](https://github.com/janro1/runl/commit/f6f86f589699162d001cb7a8d8c1c73cd1185d53))
+
 ## [1.2.0](https://github.com/janro1/runl/compare/v1.1.0...v1.2.0) (2023-12-01)
 
 
@@ -30,19 +42,4 @@
 ### Bug Fixes
 
 * esm types ([5696307](https://github.com/janro1/runl/commit/5696307ec8115bf32bece95c94d1e65b80a0416c))
-
-## [0.8.0](https://github.com/janro1/runl/compare/v0.7.0...v0.8.0) (2023-01-12)
-
-
-### Features
-
-* add ESM support ([1383e6e](https://github.com/janro1/runl/commit/1383e6e049571aa31e0acd1a853eac145255f310))
-
-
-### Misc
-
-* add minimal node version ([ceba156](https://github.com/janro1/runl/commit/ceba156b1f7c7e49e5b906fa3a492d3e72cbfaff))
-* fix release action ([8378a81](https://github.com/janro1/runl/commit/8378a81bf9b8e4d3d6337eff9134e9ba083baf06))
-* update dev dependencies ([2f0f01f](https://github.com/janro1/runl/commit/2f0f01fc734789a290aff6bd0344d108ea72e724))
-* update node version in pipelines ([ea54cc1](https://github.com/janro1/runl/commit/ea54cc1d9e3598ba7d25821cb7de2eba82e9f177))
 
