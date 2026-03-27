@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/janro1/runl/compare/v1.3.0...v1.3.1) (2026-03-27)
+
+
+### Bug Fixes
+
+* async void handlers ([db38112](https://github.com/janro1/runl/commit/db381120257f3f008a80ab8b513ea64cfaa0b09e))
+
 ## [1.3.0](https://github.com/janro1/runl/compare/v1.2.0...v1.3.0) (2026-03-25)
 
 
@@ -35,11 +42,4 @@
 ### Misc
 
 * update dev dependencies ([3b5f608](https://github.com/janro1/runl/commit/3b5f6089905ad737950d917fc8a0c5cc7cf84e08))
-
-## [0.8.1](https://github.com/janro1/runl/compare/v0.8.0...v0.8.1) (2023-01-12)
-
-
-### Bug Fixes
-
-* esm types ([5696307](https://github.com/janro1/runl/commit/5696307ec8115bf32bece95c94d1e65b80a0416c))
 
