@@ -165,4 +165,15 @@ describe('runl', () => {
 
     await lambda.execute();
   });
+
+  it('works with async void handlers', async () => {
+    const lambdaPath = __dirname + '/handler/async-void-handler.cjs';
+
+    lambda = new Lambda({
+      mode: 'Ephemeral',
+      lambdaPath
+    });
+
+    await lambda.execute();
+  });
 });

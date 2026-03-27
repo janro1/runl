@@ -40,6 +40,11 @@ export const runLambda = async (loader: LambdaHandlerLoader): Promise<void> => {
       const handler = await loader(options);
       const context = new LambdaContext(options);
 
+      let resolveSendPromise: () => void;
+      const sendPromise = new Promise<void>((resolve) => {
+        resolveSendPromise = resolve;
+      });
+
       const callback: Callback = (error, result): void => {
         if (!process.send) {
           console.error('process.send is undefined');
@@ -52,9 +57,9 @@ export const runLambda = async (loader: LambdaHandlerLoader): Promise<void> => {
           error: error ? serializeError(error) : undefined,
           requestNumber: options.requestNumber
         });
-      };
 
-      const lambdaResult = handler(options.event, context, callback);
+        resolveSendPromise();
+      };
 
       if (!process.send) {
         console.error('process.send is undefined');
@@ -62,8 +67,15 @@ export const runLambda = async (loader: LambdaHandlerLoader): Promise<void> => {
         return;
       }
 
-      if (!lambdaResult) {
+      const result =
+        handler.constructor.name === 'AsyncFunction'
+          ? await handler(options.event, context, callback)
+          : handler(options.event, context, callback);
+
+      if (!result) {
         if (handler.length >= 3) {
+          await sendPromise;
+
           return;
         }
 
@@ -75,10 +87,8 @@ export const runLambda = async (loader: LambdaHandlerLoader): Promise<void> => {
         return;
       }
 
-      const result =
-        lambdaResult.then !== undefined ? await lambdaResult : lambdaResult;
       process.send({
-        result,
+        result: result,
         requestNumber: options.requestNumber
       });
     } catch (e) {
